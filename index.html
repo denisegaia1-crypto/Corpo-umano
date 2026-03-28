@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Il Corpo Umano</title>
+  <link rel="stylesheet" href="stile.css">
+  <style>
+    .corpo-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 10px 20px 40px;
+    }
+    .container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      max-width: 1100px;
+    }
+    #corpo {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .label-btn {
+      position: absolute;
+      background: transparent;
+      border: 2px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 0;
+      /* center su left/top */
+      transform: translate(-50%, -50%);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .label-btn:hover {
+      background: rgba(26,111,181,0.20);
+      border-color: rgba(26,111,181,0.55);
+    }
+    .label-btn.flash {
+      background: rgba(26,111,181,0.38);
+      border-color: #1a6fb5;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🧠 Il corpo umano</h1>
+  <p>Clicca su una parola nell'immagine per ascoltare la pronuncia</p>
+</header>
+
+<div class="btn-row">
+  <button class="btn-modo" onclick="startGame()">🎤 Modalità parla</button>
+  <button class="btn-modo verde" onclick="startQuiz()">🧩 Modalità quiz</button>
+</div>
+
+<div class="corpo-wrap">
+  <div class="container">
+    <img src="img/corpo.png" id="corpo" alt="Corpo umano">
+
+    <!-- Coordinate rilevate pixel per pixel dall'immagine 1408x768 -->
+    <!-- left/top = centro del testo; width/height = bounding box del testo + piccolo padding -->
+
+    <!-- 4. OCCHIO  cx=537 cy=101 -->
+    <button class="label-btn" data-word="occhio"
+      style="left:38.14%; top:13.15%; width:11.5%; height:6%;"></button>
+
+    <!-- 1. TESTA  cx=845 cy=101 -->
+    <button class="label-btn" data-word="testa"
+      style="left:60.01%; top:13.15%; width:9.5%; height:6%;"></button>
+
+    <!-- 5. ORECCHIO  cx=409 cy=156 -->
+    <button class="label-btn" data-word="orecchio"
+      style="left:29.05%; top:20.31%; width:13%; height:6%;"></button>
+
+    <!-- 2. NASO  cx=937 cy=156 -->
+    <button class="label-btn" data-word="naso"
+      style="left:66.55%; top:20.31%; width:9.5%; height:6%;"></button>
+
+    <!-- 13. GOLA  cx=1006 cy=216 -->
+    <button class="label-btn" data-word="gola"
+      style="left:71.45%; top:28.12%; width:10%; height:6%;"></button>
+
+    <!-- 3. BOCCA  cx=376 cy=240 -->
+    <button class="label-btn" data-word="bocca"
+      style="left:26.70%; top:31.25%; width:10%; height:6%;"></button>
+
+    <!-- 14. PETTO  cx=1020 cy=297 — unisco i due pezzi rilevati -->
+    <button class="label-btn" data-word="petto"
+      style="left:72.50%; top:38.67%; width:12%; height:6%;"></button>
+
+    <!-- 15. DENTI  cx=383 cy=321 -->
+    <button class="label-btn" data-word="denti"
+      style="left:27.20%; top:41.80%; width:10%; height:6%;"></button>
+
+    <!-- 11. SCHIENA  cx=392 cy=409 -->
+    <button class="label-btn" data-word="schiena"
+      style="left:27.84%; top:53.26%; width:13%; height:6%;"></button>
+
+    <!-- 6. BRACCIO  cx=1015 cy=409 -->
+    <button class="label-btn" data-word="braccio"
+      style="left:72.09%; top:53.26%; width:12%; height:6%;"></button>
+
+    <!-- 12. PANCIA  cx=433 cy=492 -->
+    <button class="label-btn" data-word="pancia"
+      style="left:30.75%; top:69%; width:12%; height:6%;"></button>
+
+    <!-- 9. MANO  cx=991 cy=492 -->
+    <button class="label-btn" data-word="mano"
+      style="left:70.38%; top:64.06%; width:10%; height:6%;"></button>
+
+    <!-- 10. DITO  cx=504 cy=619 -->
+    <button class="label-btn" data-word="dito"
+      style="left:35.80%; top:80.60%; width:9.5%; height:6%;"></button>
+
+    <!-- 8. GAMBA  cx=953 cy=619 -->
+    <button class="label-btn" data-word="gamba"
+      style="left:67.68%; top:80.60%; width:11%; height:6%;"></button>
+
+    <!-- 7. PIEDE  cx=873 cy=720 -->
+    <button class="label-btn" data-word="piede"
+      style="left:62.00%; top:93.75%; width:9.5%; height:6%;"></button>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  document.querySelectorAll('.label-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      parla(btn.dataset.word);
+      btn.classList.add('flash');
+      setTimeout(() => btn.classList.remove('flash'), 700);
+    });
+  });
+</script>
+</body>
+</html>

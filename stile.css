@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  --blu: #1a6fb5;
+  --blu-chiaro: #e8f4fd;
+  --verde: #27ae60;
+  --rosso: #e74c3c;
+  --grigio: #f0f4f8;
+  --testo: #2c3e50;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--grigio);
+  color: var(--testo);
+  min-height: 100vh;
+}
+
+header {
+  background: var(--blu);
+  color: white;
+  text-align: center;
+  padding: 18px 20px 14px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+header h1 { font-size: 2rem; font-weight: 800; letter-spacing: 1px; }
+header p  { font-size: 1rem; opacity: 0.85; margin-top: 4px; }
+
+.btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 18px 20px;
+}
+
+.btn-modo {
+  background: var(--blu);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 28px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 12px rgba(26,111,181,0.3);
+}
+.btn-modo:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26,111,181,0.4); }
+.btn-modo.verde { background: var(--verde); box-shadow: 0 4px 12px rgba(39,174,96,0.3); }
+
+/* Layout principale a 3 colonne */
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px 20px 40px;
+}
+
+.etichette {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 150px;
+}
+.etichette.sinistra { align-items: flex-end; }
+.etichette.destra  { align-items: flex-start; }
+
+.etichetta-btn {
+  background: white;
+  border: 2px solid var(--blu);
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--blu);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.etichetta-btn:hover, .etichetta-btn.attivo {
+  background: var(--blu);
+  color: white;
+  transform: scale(1.06);
+}
+
+/* Immagine */
+.container {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+#corpo {
+  width: 750px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hotspot trasparenti (per il quiz) */
+.hotspot {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  background: rgba(26,111,181,0.0);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: background 0.2s;
+}
+.hotspot:hover { background: rgba(26,111,181,0.25); }
+
+/* Pagina gioco */
+.gioco-page {
+  max-width: 480px;
+  margin: 40px auto;
+  text-align: center;
+  padding: 30px 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.gioco-page h2 { font-size: 1.2rem; color: var(--blu); margin-bottom: 8px; }
+.parola-grande { font-size: 3rem; font-weight: 800; color: var(--testo); margin: 20px 0; letter-spacing: 3px; }
+
+.btn-azione {
+  background: var(--blu);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 13px 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 8px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 12px rgba(26,111,181,0.3);
+}
+.btn-azione:hover { transform: translateY(-2px); }
+.btn-azione.verde { background: var(--verde); }
+
+.feedback { font-size: 1.6rem; font-weight: 700; margin: 16px 0; min-height: 44px; }
+.punti { font-size: 1rem; color: var(--blu); font-weight: 700; margin-top: 8px; }
+.torna { display: inline-block; margin-top: 20px; color: var(--blu); font-weight: 700; text-decoration: none; font-size: 1rem; }
+.torna:hover { text-decoration: underline; }
+
+/* Quiz */
+.quiz-header {
+  text-align: center;
+  padding: 20px;
+  background: var(--blu);
+  color: white;
+  margin-bottom: 10px;
+}
+.quiz-header h2 { font-size: 1.1rem; opacity: 0.85; }
+.quiz-header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: 3px; }
+.quiz-feedback { text-align: center; font-size: 1.5rem; font-weight: 700; padding: 10px; min-height: 48px; }
+.quiz-nav { text-align: center; padding: 10px; }
+
+@media (max-width: 750px) {
+  .layout { flex-direction: column; align-items: center; }
+  .etichette { flex-direction: row; flex-wrap: wrap; justify-content: center; min-width: unset; }
+  .etichette.sinistra { align-items: center; }
+  #corpo { width: 300px; }
+}

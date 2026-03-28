@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Gioco - Corpo Umano</title>
+    <link rel="stylesheet" href="stile.css">
+    <style>
+      .feedback-corretto {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #27ae60;
+      }
+      .feedback-sbagliato {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #e74c3c;
+      }
+      .feedback-sbagliato span {
+        background: #fde8e8;
+        border-radius: 8px;
+        padding: 2px 10px;
+        font-style: italic;
+      }
+      .ascoltando {
+        font-size: 1rem;
+        color: #1a6fb5;
+        font-weight: 700;
+        animation: pulsa 1s ease-in-out infinite;
+      }
+      @keyframes pulsa { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    </style>
+</head>
+<body>
+
+<header>
+  <h1>🎤 Ascolta e ripeti</h1>
+</header>
+
+<div class="gioco-page">
+  <h2>Pronuncia questa parola:</h2>
+  <div class="parola-grande" id="word">---</div>
+
+  <div>
+    <button class="btn-azione" onclick="parla(currentWord)">🔊 Ascolta</button>
+    <button class="btn-azione verde" id="btn-parla" onclick="avviaRiconoscimento()">🎤 Parla</button>
+  </div>
+
+  <div class="feedback" id="feedback"></div>
+  <div class="punti" id="points">Punti: 0</div>
+
+  <br>
+  <button class="btn-azione" onclick="nextWord()">➡️ Prossima parola</button>
+  <br>
+  <a href="index.html" class="torna">⬅ Torna al corpo</a>
+</div>
+
+<script src="app.js"></script>
+<script>
+function avviaRiconoscimento() {
+  if (!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)) {
+    alert('Il riconoscimento vocale non è supportato. Usa Chrome o Edge.');
+    return;
+  }
+
+  const feedback = document.getElementById('feedback');
+  const btn = document.getElementById('btn-parla');
+
+  feedback.innerHTML = '<span class="ascoltando">🎙️ Sto ascoltando…</span>';
+  btn.disabled = true;
+  btn.textContent = '⏳ …';
+
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = 'it-IT';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onresult = function(event) {
+    btn.disabled = false;
+    btn.textContent = '🎤 Parla';
+
+    const detto = event.results[0][0].transcript.toLowerCase().trim();
+
+    if (detto === currentWord) {
+      points++;
+      document.getElementById('points').innerText = 'Punti: ' + points;
+      feedback.innerHTML = '<span class="feedback-corretto">✅ Corretto!</span>';
+    } else {
+      feedback.innerHTML =
+        '❌ <span class="feedback-sbagliato">Sbagliato! Hai detto <span>"' + detto + '"</span></span>';
+    }
+  };
+
+  recognition.onerror = function() {
+    btn.disabled = false;
+    btn.textContent = '🎤 Parla';
+    feedback.innerHTML = '<span style="color:#888;">⚠️ Non ti ho sentito. Riprova!</span>';
+  };
+
+  recognition.onend = function() {
+    btn.disabled = false;
+    btn.textContent = '🎤 Parla';
+  };
+
+  recognition.start();
+}
+
+window.addEventListener('load', nextWord);
+</script>
+</body>
+</html>

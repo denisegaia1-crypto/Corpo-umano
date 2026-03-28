@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz - Corpo Umano</title>
+  <link rel="stylesheet" href="stile.css">
+  <style>
+    .corpo-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 10px 20px 20px;
+    }
+    .container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      max-width: 1100px;
+    }
+    #corpo { width: 100%; height: auto; display: block; }
+
+    .label-btn {
+      position: absolute;
+      background: transparent;
+      border: 2px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 0;
+      transform: translate(-50%, -50%);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .label-btn:hover {
+      background: rgba(26,111,181,0.18);
+      border-color: rgba(26,111,181,0.45);
+    }
+    .label-btn.correct {
+      background: rgba(39,174,96,0.32) !important;
+      border-color: #27ae60 !important;
+    }
+    .label-btn.wrong {
+      background: rgba(231,76,60,0.32) !important;
+      border-color: #e74c3c !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-header">
+  <h2>Ascolta e clicca la parte corretta</h2>
+  <h1 id="target">---</h1>
+</div>
+
+<div class="quiz-feedback" id="quizFeedback"></div>
+
+<div class="corpo-wrap">
+  <div class="container">
+    <img src="img/corpo.png" id="corpo" alt="Corpo umano">
+
+    <button class="label-btn" data-word="occhio"   style="left:38.14%; top:13.15%; width:11.5%; height:6%;"></button>
+    <button class="label-btn" data-word="testa"    style="left:60.01%; top:13.15%; width:9.5%;  height:6%;"></button>
+    <button class="label-btn" data-word="orecchio" style="left:29.05%; top:20.31%; width:13%;   height:6%;"></button>
+    <button class="label-btn" data-word="naso"     style="left:66.55%; top:20.31%; width:9.5%;  height:6%;"></button>
+    <button class="label-btn" data-word="gola"     style="left:71.45%; top:28.12%; width:10%;   height:6%;"></button>
+    <button class="label-btn" data-word="bocca"    style="left:26.70%; top:31.25%; width:10%;   height:6%;"></button>
+    <button class="label-btn" data-word="petto"    style="left:72.50%; top:38.67%; width:12%;   height:6%;"></button>
+    <button class="label-btn" data-word="denti"    style="left:27.20%; top:41.80%; width:10%;   height:6%;"></button>
+    <button class="label-btn" data-word="schiena"  style="left:27.84%; top:53.26%; width:13%;   height:6%;"></button>
+    <button class="label-btn" data-word="braccio"  style="left:72.09%; top:53.26%; width:12%;   height:6%;"></button>
+    <button class="label-btn" data-word="pancia"   style="left:30.75%; top:69%; width:12%;   height:6%;"></button>
+    <button class="label-btn" data-word="mano"     style="left:70.38%; top:64.06%; width:10%;   height:6%;"></button>
+    <button class="label-btn" data-word="dito"     style="left:35.80%; top:80.60%; width:9.5%;  height:6%;"></button>
+    <button class="label-btn" data-word="gamba"    style="left:67.68%; top:80.60%; width:11%;   height:6%;"></button>
+    <button class="label-btn" data-word="piede"    style="left:62.00%; top:93.75%; width:9.5%;  height:6%;"></button>
+
+  </div>
+</div>
+
+<div class="quiz-nav">
+  <button class="btn-modo" onclick="nextQuiz()">➡️ Avanti</button>
+  &nbsp;&nbsp;
+  <a href="index.html" class="torna">⬅ Torna</a>
+</div>
+
+<script src="app.js"></script>
+<script>
+  // app.js gestisce già nextQuiz() e currentWord globalmente.
+  // Qui colleghiamo solo i pulsanti al controllo risposta.
+
+  document.querySelectorAll('.label-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var word = btn.dataset.word;
+      var feedback = document.getElementById('quizFeedback');
+
+      if (word === currentWord) {
+        btn.classList.add('correct');
+        feedback.textContent = '✅ Corretto!';
+        feedback.style.color = '#27ae60';
+        // reset colori e avanza dopo 900ms
+        setTimeout(function() {
+          document.querySelectorAll('.label-btn').forEach(function(b) {
+            b.classList.remove('correct', 'wrong');
+          });
+          nextQuiz();
+        }, 900);
+      } else {
+        btn.classList.add('wrong');
+        feedback.textContent = '❌ Riprova!';
+        feedback.style.color = '#e74c3c';
+        setTimeout(function() {
+          btn.classList.remove('wrong');
+        }, 700);
+      }
+    });
+  });
+
+  // Avvia il primo quiz al caricamento
+  window.addEventListener('load', nextQuiz);
+</script>
+</body>
+</html>
